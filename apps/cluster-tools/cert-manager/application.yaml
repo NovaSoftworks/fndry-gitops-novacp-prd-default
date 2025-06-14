@@ -1,0 +1,26 @@
+# See https://github.com/cert-manager/cert-manager/blob/master/deploy/charts/cert-manager/values.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    name: in-cluster
+    namespace: cert-manager
+  source:
+    repoURL: https://charts.jetstack.io
+    chart: cert-manager
+    targetRevision: 1.18.0
+    helm:
+      valuesObject:
+        crds:
+          enabled: true   # generate CRDs
+          keep: true      # do NOT delete them on uninstall/rollback
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
