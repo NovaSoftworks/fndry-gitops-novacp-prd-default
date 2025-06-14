@@ -30,7 +30,7 @@ spec:
             pathType: Prefix
             tls: true
             annotations:
-              cert-manager.io/cluster-issuer: letsencrypt-staging
+              cert-manager.io/cluster-issuer: letsencrypt-prod
               nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
               nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
         configs:
