@@ -1,22 +1,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: novacp-prd-default-root
+  name: cluster-tools
   namespace: argocd
 spec:
+  project: default
   destination:
     name: in-cluster
     namespace: argocd
-  project: default
   source:
-    path: apps/
     repoURL: https://github.com/NovaSoftworks/gitops-novacp-prd-default
     targetRevision: HEAD
+    path: apps/cluster-tools
     directory:
-      recurse: false
+      recurse: true # allows ArgoCD to look for applications in subdirectories
   syncPolicy:
     automated:
-      prune: true # deletes resources that are no longer defined in the source
-      selfHeal: true # overrides changes made outside of ArgoCD - this is useful for drift prevention
+      prune: true
+      selfHeal: true
     syncOptions:
       - CreateNamespace=true
