@@ -1,0 +1,30 @@
+# See https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx/values.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ingress-nginx
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    name: in-cluster
+    namespace: ingress-nginx
+  source:
+    repoURL: https://kubernetes.github.io/ingress-nginx
+    chart: ingress-nginx
+    targetRevision: 4.10.1
+    helm:
+      valuesObject:
+        controller:
+          ingressClassResource:
+            name: nginx
+            enabled: true
+            default: true
+          service:
+            type: LoadBalancer      # Cloud Provider will create the public load balancer
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

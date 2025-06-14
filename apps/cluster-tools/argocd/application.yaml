@@ -1,3 +1,4 @@
+# See https://github.com/argoproj/argo-helm/blob/main/charts/argo-cd/values.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -15,8 +16,22 @@ spec:
     helm:
       valuesObject:
         server:
+          extraArgs: ["--insecure"]
+
           service:
             type: ClusterIP
+
+          ingress:
+            enabled: true
+            controller: generic
+            ingressClassName: nginx
+            hostname: "argocd.europe-west1-b.default.prd.novasoftworks.net"
+            path: /
+            pathType: Prefix
+            tls: false
+            annotations:
+              nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+              nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
         configs:
           cm:
             application.instanceLabelKey: argocd.argoproj.io/instance
