@@ -22,6 +22,8 @@ spec:
             default: true
           service:
             type: LoadBalancer      # Cloud Provider will create the public load balancer
+          extraArgs:
+            enable-ssl-passthrough: ""
   syncPolicy:
     automated:
       prune: true
