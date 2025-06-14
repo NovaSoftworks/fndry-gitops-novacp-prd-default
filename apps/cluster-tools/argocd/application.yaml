@@ -28,10 +28,11 @@ spec:
             hostname: "argocd.europe-west1-b.default.prd.novasoftworks.net"
             path: /
             pathType: Prefix
-            tls: false
+            tls: true
             annotations:
+              cert-manager.io/cluster-issuer: letsencrypt-staging
               nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-              nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+              nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
         configs:
           cm:
             application.instanceLabelKey: argocd.argoproj.io/instance
