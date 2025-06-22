@@ -36,6 +36,16 @@ spec:
         configs:
           cm:
             application.instanceLabelKey: argocd.argoproj.io/instance
+            url: https://argocd.europe-west1-b.default.prd.novasoftworks.net
+            dex.config: |
+              connectors:
+              - config:
+                  issuer: https://accounts.google.com
+                  clientID: $google-oauth:client_id
+                  clientSecret: $google-oauth:client_secret
+                type: oidc
+                id: google
+                name: Google
   syncPolicy:
     automated:
       prune: true
