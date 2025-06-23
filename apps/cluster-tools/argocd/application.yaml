@@ -33,6 +33,18 @@ spec:
               cert-manager.io/cluster-issuer: letsencrypt-prod
               nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
               nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+
+        dex:
+          volumes:
+            - name: google-json
+              secret:
+                secretName: argocd-google-groups-json
+
+          volumeMounts:
+            - name: google-json
+              mountPath: /tmp/oidc
+              readOnly: true
+              
         configs:
           cm:
             application.instanceLabelKey: argocd.argoproj.io/instance
@@ -40,10 +52,12 @@ spec:
             dex.config: |
               connectors:
               - config:
-                  issuer: https://accounts.google.com
+                  redirectURI: https://argocd.europe-west1-b.default.prd.novasoftworks.net/api/dex/callback
                   clientID: $google-oauth:client_id
                   clientSecret: $google-oauth:client_secret
-                type: oidc
+                  serviceAccountFilePath: /tmp/oidc/googleAuth.json
+                  adminEmail: sso-sync@novasoftworks.com
+                type: google
                 id: google
                 name: Google
   syncPolicy:
