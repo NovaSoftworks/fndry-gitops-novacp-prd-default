@@ -1,0 +1,26 @@
+# https://github.com/cloudnative-pg/charts/blob/main/charts/cloudnative-pg/values.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cnpg-operator
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    name: in-cluster
+    namespace: data-stack
+  source:
+    repoURL: https://cloudnative-pg.github.io/charts
+    chart: cloudnative-pg
+    targetRevision: 0.24.0
+    helm:
+      valuesObject:
+        monitoring:
+          enablePodMonitor: false
+  syncPolicy:
+    automated: 
+      prune: true
+      selfHeal: true
+    syncOptions: 
+      - CreateNamespace=true
+      - ServerSideApply=true
