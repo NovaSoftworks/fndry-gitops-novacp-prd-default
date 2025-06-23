@@ -60,6 +60,21 @@ spec:
                 type: google
                 id: google
                 name: Google
+          rbac:
+            policy.csv: |
+              # --- custom role ---
+              p, role:writer, applications, get, *, allow
+              p, role:writer, applications, create, *, allow
+              p, role:writer, applications, update, *, allow
+              p, role:writer, applications, sync, *, allow
+              p, role:writer, logs, get, *, allow
+
+              # --- group → role mappings ---
+              g, novacp-default-admins@novasoftworks.com,  role:admin
+              g, novacp-default-writers@novasoftworks.com, role:writer
+              g, novacp-default-readers@novasoftworks.com, role:readonly
+
+            policy.default: role:readonly     # anyone else can only view
   syncPolicy:
     automated:
       prune: true
