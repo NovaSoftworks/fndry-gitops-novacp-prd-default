@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: user-identity-platform
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    name: in-cluster
+    namespace: argocd
+  source:
+    repoURL: https://github.com/NovaSoftworks/gitops-novacp-prd-default
+    targetRevision: HEAD
+    path: apps/core-services/user-identity-platform
+    directory:
+      recurse: true # allows ArgoCD to look for applications in subdirectories
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
