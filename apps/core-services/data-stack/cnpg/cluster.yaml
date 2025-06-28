@@ -5,6 +5,10 @@ metadata:
   namespace: data-stack
 spec:
   instances: 1
+
+  enableSuperuserAccess: true
+
   primaryUpdateStrategy: unsupervised
+  
   storage:
     size: 10Gi
