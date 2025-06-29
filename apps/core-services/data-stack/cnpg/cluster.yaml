@@ -5,6 +5,7 @@ metadata:
   namespace: data-stack
 spec:
   instances: 1
+  enablePDB: false # Disable Pod Disruption Budget for single instance. This is required to allow the node pool to be scaled down and save costs during development.
 
   enableSuperuserAccess: true
 
