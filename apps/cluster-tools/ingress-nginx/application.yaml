@@ -16,6 +16,11 @@ spec:
     helm:
       valuesObject:
         controller:
+          tolerations: # Allows the ingress controller to run on nodes with the "cluster-tools" taint when the workload node pool is scaled down.
+            - key: "purpose"
+              operator: "Equal"
+              value: "cluster-tools"
+              effect: "NoSchedule"
           ingressClassResource:
             name: nginx
             enabled: true

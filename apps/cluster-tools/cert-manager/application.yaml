@@ -18,6 +18,42 @@ spec:
         crds:
           enabled: true   # generate CRDs
           keep: true      # do NOT delete them on uninstall/rollback
+          
+        nodeSelector:
+          purpose: cluster-tools
+
+        tolerations:
+          - key: "purpose"
+            operator: "Equal"
+            value: "cluster-tools"
+            effect: "NoSchedule"
+
+        webhook:
+          nodeSelector:
+            purpose: cluster-tools
+          tolerations:
+            - key: "purpose"
+              operator: "Equal"
+              value: "cluster-tools"
+              effect: "NoSchedule"
+
+        cainjector:
+          nodeSelector:
+            purpose: cluster-tools
+          tolerations:
+            - key: "purpose"
+              operator: "Equal"
+              value: "cluster-tools"
+              effect: "NoSchedule"
+
+        startupapicheck:
+          nodeSelector:
+            purpose: cluster-tools
+          tolerations:
+            - key: "purpose"
+              operator: "Equal"
+              value: "cluster-tools"
+              effect: "NoSchedule"
   syncPolicy:
     automated:
       prune: true

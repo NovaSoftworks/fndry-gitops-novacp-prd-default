@@ -15,6 +15,17 @@ spec:
     targetRevision: 8.0.17
     helm:
       valuesObject:
+        global:
+          nodeSelector:
+            purpose: cluster-tools # run Argo CD on the cluster-tools node pool
+
+          # -- Default tolerations for all components so that they can run on the cluster-tools node pool
+          tolerations:
+            - key: "purpose"
+              operator: "Equal"
+              value: "cluster-tools"
+              effect: "NoSchedule"
+
         server:
           extraArgs: ["--insecure"]
 
